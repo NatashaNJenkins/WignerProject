@@ -1,12 +1,12 @@
-function [ X,U,F ] = WigFun( a,b,n,m )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+function [ T,F,W ] = WigFun( a,b,n,m )
+%
 
-%at some point adress the imaginary numbers
+%Let this be the solution to the wigner transform of the gussian function.
+%Where a is a real number and not imaginary 
 
-[X,U]=meshgrid(n:0.1:m);
+[T,F]=meshgrid(n:0.05:m);
 
-F=exp(-1.*X.^2).*exp(-2.*a.*X + (a^2-b^2)).*exp(-1.*U.^2).*2*sqrt(pi);
+W=2*sqrt(pi)*exp((-1).*(T).^2 + 2*a.*T -(a^2)*0.5 + 2*(F.*b -1.*(F.^2)))*exp(-b^2);
 
 end
 

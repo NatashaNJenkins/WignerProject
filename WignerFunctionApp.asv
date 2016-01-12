@@ -96,9 +96,12 @@ end
 if(get(hObject,'Value')==2)
     set(handles.uipanel1,'Visible','on');
     set(handles.uipanel2,'Visible','off');
-    
+    %Set the initial Camera Position of the axis
     wigRefresh(hObject, eventdata, handles)
+    %handles.axes1.CameraPosition = [0,0,90];
     
+    %[x,y,f]=WigFun(get(handles.slider1,'Value'),get(handles.slider2,'Value'),-10,10);
+    %mesh(x,y,f);
 end
 %set Pulse panel on and all the rest off
 if(get(hObject,'Value')==3)
@@ -145,6 +148,9 @@ function slider1_Callback(hObject, eventdata, handles)
 % hObject    handle to slider1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+%s1=get(handles.slider1,'value');
+%set(handles.edit1,'String',s1);
+%disp(s1);
 wigRefresh(hObject, eventdata, handles);
 
 % Hints: get(hObject,'Value') returns position of slider
@@ -168,6 +174,9 @@ function slider2_Callback(hObject, eventdata, handles)
 % hObject    handle to slider2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+%s2=get(handles.slider2,'value');
+%set(handles.edit2,'String',s2);
+%disp(s2);
 wigRefresh(hObject, eventdata, handles);
 
 % Hints: get(hObject,'Value') returns position of slider
@@ -192,6 +201,13 @@ function edit1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 wigRefresh(hObject, eventdata, handles);
+
+%val = str2double(get(handles.edit1, 'String'));
+%Change the slider value
+%set(handles.slider1, 'Value', val);
+%alter that wigner function values
+%[X,Y,Z]=WigFun(val,get(handles.slider2,'Value'),-10,10);
+%    mesh(X,Y,Z);
 % Hints: get(hObject,'String') returns contents of edit1 as text
 %        str2double(get(hObject,'String')) returns contents of edit1 as a double
 
@@ -216,6 +232,15 @@ function edit2_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 wigRefresh(hObject, eventdata, handles);
 
+
+%val = str2double(get(handles.edit2, 'String'));
+%change slider value
+%set(handles.slider2, 'Value', val);
+%Alter the wigner function values
+%[X,Y,Z]=WigFun(get(handles.slider1,'Value'),val,-10,10);
+%    mesh(X,Y,Z);
+
+
 % Hints: get(hObject,'String') returns contents of edit2 as text
 %        str2double(get(hObject,'String')) returns contents of edit2 as a double
 
@@ -236,6 +261,10 @@ end
 %and vice versa
 
 function wigRefresh(hObject, eventdata, handles)
+     
+    handles.axes1.XLabel.String = 'Time'
+    handles.axes1.YLabel.String = 'Frequency'
+    handles.axes1.CameraPosition = [0,0,90];
      
     %if slider pressed it will set all edit texts and vice versa 
     if(length(get(hObject,'Style')) == length('slider'))
@@ -263,8 +292,6 @@ function wigRefresh(hObject, eventdata, handles)
     mesh(X,Y,Z);
     zlim(handles.axes1,[0,100])    
     handles.axes1.CameraPosition = [0,0,90];
-    handles.axes1.XLabel.String = 'Time'
-    handles.axes1.YLabel.String = 'Frequency'
      
 
     
