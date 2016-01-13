@@ -11,3 +11,19 @@ for n=1:length(y)
 
 end
 plot(y,F)
+
+
+
+
+%plotting the fourier transform of a gaussian signal and also plotting the
+%signal iself
+
+a=1;
+b=2;
+[x1,y1] = Signal(@(x) Gauss(x,a,b),-10,10);
+plot(x1,y1);
+
+figure
+[x2,y2] = ForierTransform(@(x) Gauss(x,a,b),-10,10);
+plot(x2,y2);
+

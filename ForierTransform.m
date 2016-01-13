@@ -1,10 +1,10 @@
-function [ F, y ] = ForierTransform( f )
+function [ F, y ] = ForierTransform( f , n , m)
 %FORIERTRANSFORM Does the fourier transform of a function, truncated where
 %appropriate only works on gaussian functions
 % F = Transform array, y = x-axis values, i.e variable that describes F, f
 % entry function
 
-y=-20:0.1:20;
+y=n:0.1:m;
 F=zeros(1,length(y));
 
 

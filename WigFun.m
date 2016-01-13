@@ -6,7 +6,7 @@ function [ T,F,W ] = WigFun( a,b,n,m )
 
 [T,F]=meshgrid(n:0.05:m);
 
-W=2*sqrt(pi)*exp((-1).*(T).^2 + 2*a.*T -(a^2)*0.5 + 2*(F.*b -1.*(F.^2)))*exp(-b^2);
+W=2*sqrt(pi)*exp((-1).*(T).^2 + 2*a.*T -(a^2)*0.5 + 2*(F.*b -2*pi.*(F.^2)))*exp(-b^2);
 
 end
 

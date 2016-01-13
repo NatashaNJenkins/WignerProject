@@ -83,10 +83,6 @@ function popupmenu1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-%detetermining the selected data set:
-
-%axes(handle.axes1);
-
 %set both panels to non-visible
 if(get(hObject,'Value')==1)
     set(handles.uipanel1,'Visible','off');
@@ -98,6 +94,8 @@ if(get(hObject,'Value')==2)
     set(handles.uipanel2,'Visible','off');
     
     wigRefresh(hObject, eventdata, handles)
+    signalRefresh(hObject, eventdata, handles)
+    ftRefresh(hObject, eventdata, handles)
     
 end
 %set Pulse panel on and all the rest off
@@ -105,21 +103,6 @@ if(get(hObject,'Value')==3)
     set(handles.uipanel1,'Visible','off');
     set(handles.uipanel2,'Visible','on');
 end
-
-%str = get(hObject, 'String');
-%val = get(hObject, 'Value');
-
-%Use a switch to select current data
-
-%switch str{val};
-%    case 'Gausssian' %gaussian option selected
-%        %want to make the gaussian panel vissible        
-%        handles.current_data = WigFun;
-%    case 'Pulse' %pulse option selected
-%        handles.current_data = Pulse;
-%end
-
-%We save the structure of the handles
 
 guidata(hObject,handles)
 
@@ -145,7 +128,9 @@ function slider1_Callback(hObject, eventdata, handles)
 % hObject    handle to slider1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-wigRefresh(hObject, eventdata, handles);
+    wigRefresh(hObject, eventdata, handles)
+    signalRefresh(hObject, eventdata, handles)
+    ftRefresh(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slide
@@ -168,7 +153,9 @@ function slider2_Callback(hObject, eventdata, handles)
 % hObject    handle to slider2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-wigRefresh(hObject, eventdata, handles);
+    wigRefresh(hObject, eventdata, handles)
+    signalRefresh(hObject, eventdata, handles)
+    ftRefresh(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
@@ -191,7 +178,9 @@ function edit1_Callback(hObject, eventdata, handles)
 % hObject    handle to edit1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-wigRefresh(hObject, eventdata, handles);
+    wigRefresh(hObject, eventdata, handles)
+    signalRefresh(hObject, eventdata, handles)
+    ftRefresh(hObject, eventdata, handles)
 % Hints: get(hObject,'String') returns contents of edit1 as text
 %        str2double(get(hObject,'String')) returns contents of edit1 as a double
 
@@ -214,7 +203,9 @@ function edit2_Callback(hObject, eventdata, handles)
 % hObject    handle to edit2 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-wigRefresh(hObject, eventdata, handles);
+    wigRefresh(hObject, eventdata, handles)
+    signalRefresh(hObject, eventdata, handles)
+    ftRefresh(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of edit2 as text
 %        str2double(get(hObject,'String')) returns contents of edit2 as a double
@@ -236,7 +227,39 @@ end
 %and vice versa
 
 function wigRefresh(hObject, eventdata, handles)
+    axes(handles.axes1);
+
+    %if slider pressed it will set all edit texts and vice versa 
+    if(length(get(hObject,'Style')) == length('slider'))
+    
+        s1=get(handles.slider1,'value');
+        set(handles.edit1,'String',s1);
+
+        s2=get(handles.slider2,'value');
+        set(handles.edit2,'String',s2);
+    
+    elseif(length(get(hObject,'Style')) == length('edit'))
+        
+        val = str2double(get(handles.edit2, 'String'));
+        set(handles.slider2, 'Value', val);
+
+        val = str2double(get(handles.edit1, 'String'));
+        set(handles.slider1, 'Value', val);
+    
+    else
+        disp('Begin');
+    end
+   
+    [X,Y,Z]=WigFun(get(handles.slider1,'Value'),get(handles.slider2,'Value'),-10,10);
+    mesh(X,Y,Z);
+    %zlim(handles.axes1,[0,100])    
+    handles.axes1.CameraPosition = [0,0,90];
+    handles.axes1.XLabel.String = 'Time';
+    handles.axes1.YLabel.String = 'Frequency';
      
+    
+function signalRefresh(hObject, eventdata, handles)
+   
     %if slider pressed it will set all edit texts and vice versa 
     if(length(get(hObject,'Style')) == length('slider'))
     
@@ -258,15 +281,45 @@ function wigRefresh(hObject, eventdata, handles)
         disp('Begin');
     end
     
-    zlim(handles.axes1,[0,100])
-    [X,Y,Z]=WigFun(get(handles.slider1,'Value'),get(handles.slider2,'Value'),-10,10);
-    mesh(X,Y,Z);
-    zlim(handles.axes1,[0,100])    
-    handles.axes1.CameraPosition = [0,0,90];
-    handles.axes1.XLabel.String = 'Time'
-    handles.axes1.YLabel.String = 'Frequency'
-     
+    [X,Y]=Signal(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-10,10);
+    plot(handles.axes2,X,Y);
+    handles.axes2.XLabel.String = 'Time';
+    %handles.axes2.YLabel.String = 'Frequency';
+    
+    
+        
+        
+function ftRefresh(hObject, eventdata, handles)
+    
+     %if slider pressed it will set all edit texts and vice versa 
+    if(length(get(hObject,'Style')) == length('slider'))
+    
+        s1=get(handles.slider1,'value');
+        set(handles.edit1,'String',s1);
 
+        s2=get(handles.slider2,'value');
+        set(handles.edit2,'String',s2);
+    
+    elseif(length(get(hObject,'Style')) == length('edit'))
+        
+        val = str2double(get(handles.edit2, 'String'));
+        set(handles.slider2, 'Value', val);
+
+        val = str2double(get(handles.edit1, 'String'));
+        set(handles.slider1, 'Value', val);
+    
+    else
+        disp('Begin');
+    end
+
+    [X,Y]=ForierTransform(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-10,10);
+    plot(handles.axes3,X,Y);
+    
+    handles.axes3.XLabel.String = 'Amplitude';
+    handles.axes3.YLabel.String = 'Frequency';
+        
+        
+        
     
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
