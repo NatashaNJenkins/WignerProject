@@ -249,10 +249,10 @@ function wigRefresh(hObject, eventdata, handles)
     else
         disp('Begin');
     end
-   
-    [X,Y,Z]=WigFun(get(handles.slider1,'Value'),get(handles.slider2,'Value'),-10,10);
-    mesh(X,Y,Z);
-    %zlim(handles.axes1,[0,100])    
+  
+    [T,F,W] = Wigner(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-10,10);
+    surf(real(T),real(F),real(W));
+    
     handles.axes1.CameraPosition = [0,0,90];
     handles.axes1.XLabel.String = 'Time';
     handles.axes1.YLabel.String = 'Frequency';
