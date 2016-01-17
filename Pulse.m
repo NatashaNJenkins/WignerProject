@@ -1,10 +1,10 @@
-function [ f ] = Pulse( x,a)
+function [ f ] = Pulse( x,a,b)
 %PULSE mimmicks a pulse signal. 
 
 f = zeros(1,length(x));
 
 for n=1:length(x)
-   if (x(n)>=-1) && (x(n)<=1)
+   if (x(n)>=-b) && (x(n)<=b)
        p=a;
    else
        p=0;
