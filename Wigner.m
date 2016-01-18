@@ -1,7 +1,7 @@
 function [ T,F,W ] = Wigner( f,n,m )
 %WIGNER function can produce a Wigner transform of any function f. n and m
 %are the limits of the square matrix
-[T,F]=meshgrid(n:0.2:m);
+[T,F]=meshgrid(n:0.1:m);
 W = zeros(length(F),length(T));
 for i = 1:length(T)
     for j = 1:length(F)

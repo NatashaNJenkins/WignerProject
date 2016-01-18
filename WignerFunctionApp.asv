@@ -22,7 +22,7 @@ function varargout = WignerFunctionApp(varargin)
 
 % Edit the above text to modify the response to help WignerFunctionApp
 
-% Last Modified by GUIDE v2.5 17-Jan-2016 04:10:29
+% Last Modified by GUIDE v2.5 17-Jan-2016 23:37:43
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -79,19 +79,18 @@ varargout{1} = handles.output;
 
 % --- Executes on selection change in popupmenu1.
 function popupmenu1_Callback(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-%set both panels to non-visible
+%set all panels to non-visible
 if(get(hObject,'Value')==1)
     set(handles.uipanel1,'Visible','off');
     set(handles.uipanel2,'Visible','off');
+    set(handles.uipanel3,'Visible','off');
 end
 %set gaussian panel on and all others off
 if(get(hObject,'Value')==2)
     set(handles.uipanel1,'Visible','on');
     set(handles.uipanel2,'Visible','off');
+    set(handles.uipanel3,'Visible','off');
     
     wigRefresh(hObject, eventdata, handles)
 end
@@ -99,48 +98,45 @@ end
 if(get(hObject,'Value')==3)
     set(handles.uipanel1,'Visible','off');
     set(handles.uipanel2,'Visible','on');
+    set(handles.uipanel3,'Visible','off');
+    
+    wigRefresh(hObject, eventdata, handles)
+end
+
+%set Triangle panel on and all the rest off
+if(get(hObject,'Value')==4)
+    set(handles.uipanel1,'Visible','off');
+    set(handles.uipanel2,'Visible','off');
+    set(handles.uipanel3,'Visible','on');
     
     wigRefresh(hObject, eventdata, handles)
 end
 
 guidata(hObject,handles)
 
-% Hints: contents = cellstr(get(hObject,'String')) returns popupmenu1 contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from popupmenu1
 
 
 % --- Executes during object creation, after setting all properties.
 function popupmenu1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to popupmenu1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
+%THE FOLLOWING ARE THE SLIDERS AND EDIT TEXT BOXES FOR THE GAUSSIAN SIGNAL ANALYSIS
+%THEY ARE FOUND IN UIPANEL1
 
 % --- Executes on slider movement.
 function slider1_Callback(hObject, eventdata, handles)
-% hObject    handle to slider1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
     wigRefresh(hObject, eventdata, handles)
    
 
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slide
-
-
 % --- Executes during object creation, after setting all properties.
 function slider1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
+
 set(hObject,'Value',1);
-% Hint: slider controls usually have a light gray background.
+
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
@@ -148,23 +144,15 @@ end
 
 % --- Executes on slider movement.
 function slider2_Callback(hObject, eventdata, handles)
-% hObject    handle to slider2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-    wigRefresh(hObject, eventdata, handles)
-    
 
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+    wigRefresh(hObject, eventdata, handles)
 
 
 % --- Executes during object creation, after setting all properties.
 function slider2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
+
 set(hObject,'Value',1);
-% Hint: slider controls usually have a light gray background.
+
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
@@ -172,71 +160,41 @@ end
 
 
 function edit1_Callback(hObject, eventdata, handles)
-% hObject    handle to edit1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
     wigRefresh(hObject, eventdata, handles)
-    
-% Hints: get(hObject,'String') returns contents of edit1 as text
-%        str2double(get(hObject,'String')) returns contents of edit1 as a double
 
 
 % --- Executes during object creation, after setting all properties.
 function edit1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
 
 
-
 function edit2_Callback(hObject, eventdata, handles)
-% hObject    handle to edit2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-    wigRefresh(hObject, eventdata, handles)
-   
 
-% Hints: get(hObject,'String') returns contents of edit2 as text
-%        str2double(get(hObject,'String')) returns contents of edit2 as a double
-
+wigRefresh(hObject, eventdata, handles)
 
 % --- Executes during object creation, after setting all properties.
 function edit2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.n 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
        
+%THE FOLLOWING ARE THE SLIDERS AND EDIT TEXT BOXES FOR THE PULSE SIGNAL ANALYSIS
+%THEY ARE FOUND IN UIPANEL2
 
 % --- Executes on slider movement.
 function slider3_Callback(hObject, eventdata, handles)
-% hObject    handle to slider3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
 wigRefresh(hObject, eventdata, handles)
-    
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
 
 % --- Executes during object creation, after setting all properties.
 function slider3_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: slider controls usually have a light gray background.
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
@@ -244,79 +202,124 @@ end
 
 % --- Executes on slider movement.
 function slider4_Callback(hObject, eventdata, handles)
-% hObject    handle to slider4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-wigRefresh(hObject, eventdata, handles)
-    
-% Hints: get(hObject,'Value') returns position of slider
-%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
+wigRefresh(hObject, eventdata, handles)
 
 % --- Executes during object creation, after setting all properties.
 function slider4_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to slider4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: slider controls usually have a light gray background.
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
 
 
-function edit4_Callback(hObject, eventdata, handles)
-% hObject    handle to edit4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-wigRefresh(hObject, eventdata, handles)
-    
-% Hints: get(hObject,'String') returns contents of edit4 as text
-%        str2double(get(hObject,'String')) returns contents of edit4 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function edit4_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit4 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-
 function edit3_Callback(hObject, eventdata, handles)
-% hObject    handle to edit3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
 wigRefresh(hObject, eventdata, handles)
-    
-% Hints: get(hObject,'String') returns contents of edit3 as text
-%        str2double(get(hObject,'String')) returns contents of edit3 as a double
 
 
 % --- Executes during object creation, after setting all properties.
 function edit3_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to edit3 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
 
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+function edit4_Callback(hObject, eventdata, handles)
+
+wigRefresh(hObject, eventdata, handles)
+
+% --- Executes during object creation, after setting all properties.
+function edit4_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+%THE FOLLOWING ARE THE SLIDERS AND EDIT TEXT BOXES FOR THE TRIANGLE SIGNAL ANALYSIS
+%THEY ARE FOUND IN UIPANEL3
+
+% --- Executes on slider movement.
+function slider5_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function slider5_CreateFcn(hObject, eventdata, handles)
+
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+
+function edit5_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function edit5_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on slider movement.
+function slider6_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function slider6_CreateFcn(hObject, eventdata, handles)
+
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+
+function edit6_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function edit6_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on slider movement.
+function slider7_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function slider7_CreateFcn(hObject, eventdata, handles)
+
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+
+function edit7_Callback(hObject, eventdata, handles)
+
+
+% --- Executes during object creation, after setting all properties.
+function edit7_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
 
 
 function wigRefresh(hObject, eventdata, handles)
     axes(handles.axes1);
 
     if (get(handles.popupmenu1,'value'))==2
+        %
         %if slider pressed it will set all edit texts and vice versa
         if(length(get(hObject,'Style')) == length('slider'))
             
@@ -379,34 +382,77 @@ function wigRefresh(hObject, eventdata, handles)
         end
         
         %produce the refresh for the PULSE signal
-        [T,F,W] = Wigner(@(x) Pulse(x,get(handles.slider3,'Value')),-10,10);
+        [T,F,W] = Wigner(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
         surf(real(T),real(F),real(W));
         
         handles.axes1.CameraPosition = [0,0,90];
         handles.axes1.XLabel.String = 'Time';
         handles.axes1.YLabel.String = 'Frequency';
         
-        [X,Y]=Signal(@(x) Pulse(x,get(handles.slider3,'Value')),-10,10);
+        [X,Y]=Signal(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
         plot(handles.axes2,X,Y);
         handles.axes2.XLabel.String = 'Time';
         
-        [X,Y]=ForierTransform(@(x) Pulse(x,get(handles.slider3,'Value')),-10,10);
+        [X,Y]=ForierTransform(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
         plot(handles.axes3,X,Y);
         
         handles.axes3.XLabel.String = 'Amplitude';
         handles.axes3.YLabel.String = 'Frequency';
+      
+    
+    elseif (get(handles.popupmenu1,'value'))==4
+        %if slider pressed it will set all edit texts and vice versa
+        if(length(get(hObject,'Style')) == length('slider'))
+            
+            s5=get(handles.slider5,'value');
+            set(handles.edit5,'String',s5);
+            
+            s6=get(handles.slider6,'value');
+            set(handles.edit6,'String',s6);
+            
+            s7=get(handles.slider7,'value');
+            set(handles.edit7,'String',s7);
+            
+        elseif(length(get(hObject,'Style')) == length('edit'))
+            
+            val = str2double(get(handles.edit5, 'String'));
+            set(handles.slider5, 'Value', val);
+            
+            val = str2double(get(handles.edit6, 'String'));
+            set(handles.slider6, 'Value', val);
+            
+            val = str2double(get(handles.edit7, 'String'));
+            set(handles.slider7, 'Value', val);
+            
+        else
+            disp('Start Pulse');
+        end
         
+        %produce the refresh for the PULSE signal
+        [T,F,W] = Wigner(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
+        surf(real(T),real(F),real(W));
+        
+        handles.axes1.CameraPosition = [0,0,90];
+        handles.axes1.XLabel.String = 'Time';
+        handles.axes1.YLabel.String = 'Frequency';
+        
+        [X,Y]=Signal(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
+        plot(handles.axes2,X,Y);
+        handles.axes2.XLabel.String = 'Time';
+        
+        [X,Y]=ForierTransform(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
+        plot(handles.axes3,X,Y);
+        
+        handles.axes3.XLabel.String = 'Amplitude';
+        handles.axes3.YLabel.String = 'Frequency';
     else
         
         disp('End')
         
     end
-
-% --- Executes on button press in pushbutton1.
+   
+    
+    % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
 keyboard
-
-
