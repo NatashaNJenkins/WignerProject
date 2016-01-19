@@ -256,6 +256,8 @@ end
 
 function edit5_Callback(hObject, eventdata, handles)
 
+wigRefresh(hObject, eventdata, handles)
+
 
 % --- Executes during object creation, after setting all properties.
 function edit5_CreateFcn(hObject, eventdata, handles)
@@ -268,6 +270,7 @@ end
 % --- Executes on slider movement.
 function slider6_Callback(hObject, eventdata, handles)
 
+wigRefresh(hObject, eventdata, handles)
 
 % --- Executes during object creation, after setting all properties.
 function slider6_CreateFcn(hObject, eventdata, handles)
@@ -280,6 +283,7 @@ end
 
 function edit6_Callback(hObject, eventdata, handles)
 
+wigRefresh(hObject, eventdata, handles)
 
 % --- Executes during object creation, after setting all properties.
 function edit6_CreateFcn(hObject, eventdata, handles)
@@ -292,6 +296,7 @@ end
 % --- Executes on slider movement.
 function slider7_Callback(hObject, eventdata, handles)
 
+wigRefresh(hObject, eventdata, handles)
 
 % --- Executes during object creation, after setting all properties.
 function slider7_CreateFcn(hObject, eventdata, handles)
@@ -304,6 +309,7 @@ end
 
 function edit7_Callback(hObject, eventdata, handles)
 
+wigRefresh(hObject, eventdata, handles)
 
 % --- Executes during object creation, after setting all properties.
 function edit7_CreateFcn(hObject, eventdata, handles)
@@ -342,19 +348,19 @@ function wigRefresh(hObject, eventdata, handles)
         end
        
         %produce the refresh for the GAUSSIAN signal 
-        [T,F,W] = Wigner(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-10,10);
+        [T,F,W] = WignerOpt(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-5,5);
         surf(real(T),real(F),real(W));
         
         handles.axes1.CameraPosition = [0,0,90];
         handles.axes1.XLabel.String = 'Time';
         handles.axes1.YLabel.String = 'Frequency';
         
-        [X,Y]=Signal(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-10,10);
-        plot(handles.axes2,X,Y);
+        [X,Y]=Signal(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-5,5);
+        plot(handles.axes2,real(X),real(Y));
         handles.axes2.XLabel.String = 'Time';
         
-        [X,Y]=ForierTransform(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-10,10);
-        plot(handles.axes3,X,Y);
+        [X,Y]=ForierTransform(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-5,5);
+        plot(handles.axes3,real(X),real(Y));
         
         handles.axes3.XLabel.String = 'Amplitude';
         handles.axes3.YLabel.String = 'Frequency';
@@ -382,19 +388,19 @@ function wigRefresh(hObject, eventdata, handles)
         end
         
         %produce the refresh for the PULSE signal
-        [T,F,W] = Wigner(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
+        [T,F,W] = WignerOpt(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-5,5);
         surf(real(T),real(F),real(W));
         
         handles.axes1.CameraPosition = [0,0,90];
         handles.axes1.XLabel.String = 'Time';
         handles.axes1.YLabel.String = 'Frequency';
         
-        [X,Y]=Signal(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
-        plot(handles.axes2,X,Y);
+        [X,Y]=Signal(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-5,5);
+        plot(handles.axes2,real(X),real(Y));
         handles.axes2.XLabel.String = 'Time';
         
-        [X,Y]=ForierTransform(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
-        plot(handles.axes3,X,Y);
+        [X,Y]=ForierTransform(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-5,5);
+        plot(handles.axes3,real(X),real(Y));
         
         handles.axes3.XLabel.String = 'Amplitude';
         handles.axes3.YLabel.String = 'Frequency';
@@ -429,19 +435,19 @@ function wigRefresh(hObject, eventdata, handles)
         end
         
         %produce the refresh for the PULSE signal
-        [T,F,W] = Wigner(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
+        [T,F,W] = Wigner(@(x) Trang(x,get(handles.slider5,'Value'),get(handles.slider6,'Value'),get(handles.slider7,'Value')),-5,5);
         surf(real(T),real(F),real(W));
         
         handles.axes1.CameraPosition = [0,0,90];
         handles.axes1.XLabel.String = 'Time';
         handles.axes1.YLabel.String = 'Frequency';
         
-        [X,Y]=Signal(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
-        plot(handles.axes2,X,Y);
+        [X,Y]=Signal(@(x) Trang(x,get(handles.slider5,'Value'),get(handles.slider6,'Value'),get(handles.slider7,'Value')),-5,5);
+        plot(handles.axes2,real(X),real(Y));
         handles.axes2.XLabel.String = 'Time';
         
-        [X,Y]=ForierTransform(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-10,10);
-        plot(handles.axes3,X,Y);
+        [X,Y]=ForierTransform(@(x) Trang(x,get(handles.slider5,'Value'),get(handles.slider6,'Value'),get(handles.slider7,'Value')),-5,5);
+        plot(handles.axes3,real(X),real(Y));
         
         handles.axes3.XLabel.String = 'Amplitude';
         handles.axes3.YLabel.String = 'Frequency';

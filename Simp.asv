@@ -1,0 +1,12 @@
+function [ F ] = Simp( f , n , m , h)
+%f = function to intergrate, n i lower limit, m i upper limit, s it is the
+%inteval size
+
+N = (m-n)/h;
+x = n:h:m;
+w = ones(1,N); w(2:2:N-1) = 4; w(3:2:N-2) = 2; w = w*h/3; 
+
+
+
+end
+

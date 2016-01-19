@@ -348,7 +348,7 @@ function wigRefresh(hObject, eventdata, handles)
         end
        
         %produce the refresh for the GAUSSIAN signal 
-        [T,F,W] = Wigner(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-5,5);
+        [T,F,W] = WignerOpt(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-5,5);
         surf(real(T),real(F),real(W));
         
         handles.axes1.CameraPosition = [0,0,90];
@@ -388,7 +388,7 @@ function wigRefresh(hObject, eventdata, handles)
         end
         
         %produce the refresh for the PULSE signal
-        [T,F,W] = Wigner(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-5,5);
+        [T,F,W] = WignerOpt(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-5,5);
         surf(real(T),real(F),real(W));
         
         handles.axes1.CameraPosition = [0,0,90];
@@ -435,7 +435,7 @@ function wigRefresh(hObject, eventdata, handles)
         end
         
         %produce the refresh for the PULSE signal
-        [T,F,W] = Wigner(@(x) Trang(x,get(handles.slider5,'Value'),get(handles.slider6,'Value'),get(handles.slider7,'Value')),-5,5);
+        [T,F,W] = WignerOpt(@(x) Trang(x,get(handles.slider5,'Value'),get(handles.slider6,'Value'),get(handles.slider7,'Value')),-5,5);
         surf(real(T),real(F),real(W));
         
         handles.axes1.CameraPosition = [0,0,90];
