@@ -356,11 +356,11 @@ function wigRefresh(hObject, eventdata, handles)
         handles.axes1.YLabel.String = 'Frequency';
         
         [X,Y]=Signal(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-5,5);
-        plot(handles.axes2,X,Y);
+        plot(handles.axes2,real(X),real(Y));
         handles.axes2.XLabel.String = 'Time';
         
         [X,Y]=ForierTransform(@(x) Gauss(x,get(handles.slider1,'Value'),get(handles.slider2,'Value')),-5,5);
-        plot(handles.axes3,X,Y);
+        plot(handles.axes3,real(X),real(Y));
         
         handles.axes3.XLabel.String = 'Amplitude';
         handles.axes3.YLabel.String = 'Frequency';
@@ -396,11 +396,11 @@ function wigRefresh(hObject, eventdata, handles)
         handles.axes1.YLabel.String = 'Frequency';
         
         [X,Y]=Signal(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-5,5);
-        plot(handles.axes2,X,Y);
+        plot(handles.axes2,real(X),real(Y));
         handles.axes2.XLabel.String = 'Time';
         
         [X,Y]=ForierTransform(@(x) Pulse(x,get(handles.slider3,'Value'),get(handles.slider4,'Value')),-5,5);
-        plot(handles.axes3,X,Y);
+        plot(handles.axes3,real(X),real(Y));
         
         handles.axes3.XLabel.String = 'Amplitude';
         handles.axes3.YLabel.String = 'Frequency';
@@ -443,11 +443,11 @@ function wigRefresh(hObject, eventdata, handles)
         handles.axes1.YLabel.String = 'Frequency';
         
         [X,Y]=Signal(@(x) Trang(x,get(handles.slider5,'Value'),get(handles.slider6,'Value'),get(handles.slider7,'Value')),-5,5);
-        plot(handles.axes2,X,Y);
+        plot(handles.axes2,real(X),real(Y));
         handles.axes2.XLabel.String = 'Time';
         
         [X,Y]=ForierTransform(@(x) Trang(x,get(handles.slider5,'Value'),get(handles.slider6,'Value'),get(handles.slider7,'Value')),-5,5);
-        plot(handles.axes3,X,Y);
+        plot(handles.axes3,real(X),real(Y));
         
         handles.axes3.XLabel.String = 'Amplitude';
         handles.axes3.YLabel.String = 'Frequency';
