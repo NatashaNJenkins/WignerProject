@@ -22,7 +22,7 @@ function varargout = WignerFunctionApp(varargin)
 
 % Edit the above text to modify the response to help WignerFunctionApp
 
-% Last Modified by GUIDE v2.5 17-Jan-2016 23:37:43
+% Last Modified by GUIDE v2.5 28-Jan-2016 16:59:39
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -85,12 +85,14 @@ if(get(hObject,'Value')==1)
     set(handles.uipanel1,'Visible','off');
     set(handles.uipanel2,'Visible','off');
     set(handles.uipanel3,'Visible','off');
+    set(handles.uipanelEnterSignal,'Visible','off');
 end
 %set gaussian panel on and all others off
 if(get(hObject,'Value')==2)
     set(handles.uipanel1,'Visible','on');
     set(handles.uipanel2,'Visible','off');
     set(handles.uipanel3,'Visible','off');
+    set(handles.uipanelEnterSignal,'Visible','off');
     
     wigRefresh(hObject, eventdata, handles)
 end
@@ -99,6 +101,7 @@ if(get(hObject,'Value')==3)
     set(handles.uipanel1,'Visible','off');
     set(handles.uipanel2,'Visible','on');
     set(handles.uipanel3,'Visible','off');
+    set(handles.uipanelEnterSignal,'Visible','off');
     
     wigRefresh(hObject, eventdata, handles)
 end
@@ -108,7 +111,17 @@ if(get(hObject,'Value')==4)
     set(handles.uipanel1,'Visible','off');
     set(handles.uipanel2,'Visible','off');
     set(handles.uipanel3,'Visible','on');
+    set(handles.uipanelEnterSignal,'Visible','off');
     
+    wigRefresh(hObject, eventdata, handles)
+end
+
+%set The panel user input on
+if(get(hObject,'Value')==5)
+    set(handles.uipanel1,'Visible','off');
+    set(handles.uipanel2,'Visible','off');
+    set(handles.uipanel3,'Visible','off');
+    set(handles.uipanelEnterSignal,'Visible','on');
     wigRefresh(hObject, eventdata, handles)
 end
 
@@ -462,3 +475,16 @@ function wigRefresh(hObject, eventdata, handles)
 function pushbutton1_Callback(hObject, eventdata, handles)
 
 keyboard
+
+
+
+function Signal_Callback(hObject, eventdata, handles)
+
+
+
+% --- Executes during object creation, after setting all properties.
+function Signal_CreateFcn(hObject, eventdata, handles)
+
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
